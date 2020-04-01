@@ -2,15 +2,49 @@ import {html, render} from 'https://unpkg.com/lit-html?module';
 import '@lion/input/lion-input.js';
 import '@lion/input-amount/lion-input-amount.js';
 import '@lion/input-date/lion-input-date.js';
+import '@lion/textarea/lion-textarea.js';
+import '@lion/input-iban/lion-input-iban.js';
+import '@lion/checkbox-group/lion-checkbox-group.js';
+import '@lion/checkbox-group/lion-checkbox.js';
+import '@lion/radio-group/lion-radio-group.js';
+import '@lion/radio-group/lion-radio.js';
+import '@lion/select-rich/lion-select-rich.js';
+import '@lion/select-rich/lion-options.js';
+import '@lion/select-rich/lion-option.js';
+import '@lion/button/lion-button.js';
 const value = "Mayank";
 // Define a template function
 const myTemplate = () => html`<p>Hello ${value}</p>
-<lion-input label="First Name" id="Name" placeholder="Name"></lion-input>
-<p>Last Name</p>
-<lion-input label="Last Name" id="Name" placeholder="Name"></lion-input>
+<lion-input label="First Name" id="Name"></lion-input>
+<lion-input label="Last Name"></lion-input>
 <lion-input-date label="Date of application"></lion-input-date>
-<button @click=${clickHandler}>Click Me!</button>
-
+<lion-textarea label="Biography" max-rows="4"></lion-textarea>
+<lion-input-amount label="Money" currency="USD" .modelValue=${123456.78}></lion-input-amount>
+<lion-input-iban label="Iban" name="account"></lion-input-iban>
+<lion-checkbox-group
+  name="scientists[]"
+  label="Favourite scientists"
+>
+  <lion-checkbox label="Archimedes" .choiceValue=${'Archimedes'}></lion-checkbox>
+  <lion-checkbox label="Francis Bacon" .choiceValue=${'Francis Bacon'}></lion-checkbox>
+  <lion-checkbox label="Marie Curie" .choiceValue=${'Marie Curie'}></lion-checkbox>
+</lion-checkbox-group>
+<lion-radio-group name="dinos_1" label="What are your favourite dinosaurs?">
+  <lion-radio label="allosaurus" .choiceValue=${'allosaurus'}></lion-radio>
+  <lion-radio label="brontosaurus" .choiceValue=${'brontosaurus'}></lion-radio>
+  <lion-radio label="diplodocus" .choiceValue=${'diplodocus'}></lion-radio>
+</lion-radio-group>
+<lion-select-rich name="favoriteColor" label="Favorite color">
+  <lion-options slot="input">
+    <lion-option .choiceValue=${'red'}>Red</lion-option>
+    <lion-option .choiceValue=${'hotpink'} checked>Hotpink</lion-option>
+    <lion-option .choiceValue=${'teal'}>Teal</lion-option>
+  </lion-options>
+</lion-select-rich>
+<lion-checkbox label="I blindly accept all terms and conditions" .choiceValue=${'Archimedes'}></lion-checkbox>
+<lion-textarea label="Comments" max-rows="4"></lion-textarea>
+<lion-button>Submit</lion-button>
+<lion-button>Reset</lion-button>
 `;
 const clickHandler = {
     // handleEvent method is required.
