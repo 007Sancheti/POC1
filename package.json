@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@lion/ajax": "^0.2.8",
     "@lion/button": "^0.5.10",
     "@lion/checkbox-group": "^0.8.6",
     "@lion/input": "^0.5.20",

@@ -12,11 +12,12 @@ import '@lion/select-rich/lion-select-rich.js';
 import '@lion/select-rich/lion-options.js';
 import '@lion/select-rich/lion-option.js';
 import '@lion/button/lion-button.js';
+import { ajax, AjaxClass } from '@lion/ajax';
 const value = "Mayank";
 // Define a template function
 const myTemplate = () => html`<p>Hello ${value}</p>
-<lion-input label="First Name" id="Name"></lion-input>
-<lion-input label="Last Name"></lion-input>
+<lion-input label="First Name" id="firstName"></lion-input>
+<lion-input label="Last Name" id="lastName"></lion-input>
 <lion-input-date label="Date of application"></lion-input-date>
 <lion-textarea label="Biography" max-rows="4"></lion-textarea>
 <lion-input-amount label="Money" currency="USD" .modelValue=${123456.78}></lion-input-amount>
@@ -43,19 +44,30 @@ const myTemplate = () => html`<p>Hello ${value}</p>
 </lion-select-rich>
 <lion-checkbox label="I blindly accept all terms and conditions" .choiceValue=${'Archimedes'}></lion-checkbox>
 <lion-textarea label="Comments" max-rows="4"></lion-textarea>
-<lion-button>Submit</lion-button>
+<lion-button @click="${clickHandler}">Submit</lion-button>
 <lion-button>Reset</lion-button>
 `;
 const clickHandler = {
     // handleEvent method is required.
     handleEvent(e) { 
-        let name= document.getElementById("Name").value;
-      console.log(name);
+        let firstName= document.getElementById("firstName").value;
+        let lastName= document.getElementById("lastName").value;
+        let body={firstName,lastName};
+      console.log(body,"body");
+      ajax
+      .post('http://localhost:3000/posts', body)
+      .then(response => {
+        console.log(`POST successful: ${response.status} ${response.statusText}`);
+      })
+      .catch(error => {
+        console.log(error);
+      });
     },
     // event listener objects can also define zero or more of the event 
     // listener options: capture, passive, and once.
     capture: true,
   };
-
+  ajax.get('./database/db.json').then(response => console.log(response.data));
+  
 // Render the template with some data
 render(myTemplate('lit-html'), document.body);
