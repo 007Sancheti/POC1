@@ -12,13 +12,22 @@ import '@lion/select-rich/lion-select-rich.js';
 import '@lion/select-rich/lion-options.js';
 import '@lion/select-rich/lion-option.js';
 import '@lion/button/lion-button.js';
+import './custom-components/hcl-input.js';
+import { loadDefaultFeedbackMessages} from '@lion/validate';
 import { ajax, AjaxClass } from '@lion/ajax';
-const value = "Mayank";
+const normalStyles = {};
+const highlightStyles = { color: 'white', backgroundColor: 'red'};
+let highlight = true;
 // Define a template function
-const myTemplate = () => html`<p>Hello ${value}</p>
+const myTemplate = () => html`
+<style>
+/*changing style of nested element*/
+h1{ color : blue }
+</style>
+<hcl-input></hcl-input>
 <lion-input label="First Name" id="firstName"></lion-input>
 <lion-input label="Last Name" id="lastName"></lion-input>
-<lion-input-date label="Date of application"></lion-input-date>
+<lion-input-date label="Date of application" .modelValue=${new Date('01-01-10')}></lion-input-date>
 <lion-textarea label="Biography" max-rows="4"></lion-textarea>
 <lion-input-amount label="Money" currency="USD" .modelValue=${123456.78}></lion-input-amount>
 <lion-input-iban label="Iban" name="account"></lion-input-iban>
@@ -47,13 +56,13 @@ const myTemplate = () => html`<p>Hello ${value}</p>
 <lion-button @click="${clickHandler}">Submit</lion-button>
 <lion-button>Reset</lion-button>
 `;
+loadDefaultFeedbackMessages();
 const clickHandler = {
     // handleEvent method is required.
     handleEvent(e) { 
         let firstName= document.getElementById("firstName").value;
         let lastName= document.getElementById("lastName").value;
         let body={firstName,lastName};
-      console.log(body,"body");
       ajax
       .post('http://localhost:3000/posts', body)
       .then(response => {
